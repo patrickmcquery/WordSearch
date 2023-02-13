@@ -10,8 +10,6 @@ public class Board
     {
         this.words = words;
         generateBoard();
-        showBoard(board);
-        showBoard(solBoard);
     }
 
     private void generateBoard()
@@ -77,34 +75,43 @@ public class Board
         return max;
     }
 
-    public void showBoard(char[][] board)
+    public void showBoard(boolean solution)
     {
+        char[][] tempboard;
+        if(!solution)
+        {
+            tempboard = board;
+        }
+        else
+        {
+            tempboard = solBoard;
+        }
         String seperator = " ";
         String divider = " ";
         String blank = ".";
-        for(int i = 0; i < board.length; i++)
+        for(int i = 0; i < tempboard.length; i++)
         {
             System.out.print(divider + divider + divider + divider);
         }
         System.out.println(divider);
-        for(int i = 0; i < board.length; i++)
+        for(int i = 0; i < tempboard.length; i++)
         {
-            for(int j = 0; j <board[i].length; j++)
+            for(int j = 0; j <tempboard[i].length; j++)
             {
                 
                 System.out.print(seperator);
-                if(board[i][j] == 0)
+                if(tempboard[i][j] == 0)
                 {
                     System.out.print(" " + blank + " ");
                 }
                 else
                 {
-                    System.out.print(" " + board[i][j] + " ");
+                    System.out.print(" " + tempboard[i][j] + " ");
                 }
             }
             System.out.print(seperator);
             System.out.println();
-            for(int j = 0; j <board[i].length; j++)
+            for(int j = 0; j <tempboard[i].length; j++)
             {
                 System.out.print(divider + divider + divider + divider);
             }
@@ -114,7 +121,7 @@ public class Board
         System.out.println("Word Bank:");
         for(String word: words)
         {
-            System.out.print(word + ", ");
+            System.out.println(word);
         }
     }
 }
