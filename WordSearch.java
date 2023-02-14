@@ -17,7 +17,6 @@ public class WordSearch
             System.out.println("(Q)uit the program");
             Scanner console = new Scanner(System.in);
             String resp = console.nextLine();
-            System.out.println();
             switch (resp.toLowerCase().charAt(0))
             {
                 case 'g':
@@ -61,7 +60,7 @@ public class WordSearch
     {
         if(board == null)
         {
-            System.out.println("Please create a new board first.");
+            System.out.println("\nPlease create a new board first.\n");
         }
         else
         {
