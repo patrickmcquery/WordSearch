@@ -1,3 +1,9 @@
+/*
+ * The board class holds the key features of the word search program.
+ * Inlcludes all of the logic to generate boards.
+ * 
+ * Patrick McQuery
+ */
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -11,7 +17,14 @@ public class Board
         this.words = words;
         while(!generateBoard());
     }
-
+    /*
+     * Generates a word search and randomly puts words left to right,
+     * right to left, up and down, and down and up. Then fills the spaces
+     * with random letters. Returns true if generation is succesful.
+     * After 10,000 tries of generating it will restart from scratch,
+     * this usually only takes a couple tries but can take a lot when
+     * using a lot of words.
+     */
     private boolean generateBoard()
     {
         int max = getLongest() + 2;
@@ -85,7 +98,10 @@ public class Board
         }
         return true;
     }
-
+    /*
+     * All putWordXX methods put words into the board array and
+     * solution array in their specified direction.
+     */
     private void putWordLR(String word, int x, int y)
     {
         for(int i = 0; i < word.length(); i++)
@@ -94,6 +110,10 @@ public class Board
             solBoard[y][x + i] = word.charAt(i);
         }
     }
+    /*
+     * checkWordXX is always called before putting the word.
+     * Will return true if it is valid placement. False if not.
+     */
     private boolean checkWordLR(String word, int x ,int y)
     {
         for(int i = 0; i < word.length(); i++)
@@ -163,6 +183,10 @@ public class Board
         }
         return true;
     }
+    /*
+     * Used to find the longest word in the bunch. This is used to set the
+     * width and height of the board.
+     */
     private int getLongest()
     {
         int max = 0;
@@ -175,7 +199,11 @@ public class Board
         }
         return max;
     }
-
+    /*
+     * Directly prints the board. If solution == true it will print
+     * the board with "."'s instead of random letters in order to see
+     * where all the words are. Also prints the word bank.
+     */
     public void showBoard(boolean solution)
     {
         char[][] tempboard;
@@ -232,5 +260,59 @@ public class Board
             System.out.print(word + " ~ ");
         }
         System.out.println();
+    }
+    /*
+     * Generates the word search as a string so it may be saved
+     * to a file. Same visual as the showBoard.
+     */
+    public String toString()
+    {
+        char[][] tempboard;
+        tempboard = board;
+        String seperator = " ";
+        String divider = " ";
+        String blank = ".";
+        String temp = "";
+        for(int i = 0; i < tempboard.length; i++)
+        {
+            temp += divider + divider + divider + divider;
+        }
+        temp += divider + "\n";
+        for(int i = 0; i < tempboard.length; i++)
+        {
+            for(int j = 0; j <tempboard[i].length; j++)
+            {
+                
+                temp += seperator;
+                if(tempboard[i][j] == 0)
+                {
+                    temp += " " + blank + " ";
+                }
+                else
+                {
+                    temp += " " + tempboard[i][j] + " ";
+                }
+            }
+            temp += seperator + "\n";
+            for(int j = 0; j <tempboard[i].length; j++)
+            {
+                temp += divider + divider + divider + divider;
+            }
+            temp += divider + "\n";
+        }
+        temp += "Word Bank:" + "\n";
+        int charcount = 0;
+        for(String word: words)
+        {
+            charcount += word.length();
+            if(charcount > 50)
+            {
+                temp += "\n";
+                charcount = word.length();
+            }
+            temp += word + " ~ ";
+        }
+        temp += "\n";
+        return temp;
     }
 }
